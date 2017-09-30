@@ -1,21 +1,30 @@
 package com.example.migueljardinesjr.myapp;
 
-import java.io.IOException;
+import android.Manifest;
+import android.content.Context;
+import android.content.pm.PackageManager;
+import android.media.MediaRecorder;
+
+import android.media.AudioFormat;
+import android.media.AudioRecord;
+import android.view.ViewGroup;
+import android.view.View;
+import android.view.View.OnClickListener;
+
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
-import java.net.UnknownHostException;
 
 import android.app.Activity;
-import android.media.AudioFormat;
-import android.media.AudioRecord;
-import android.media.MediaRecorder;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
-import android.view.View.OnClickListener;
+import android.widget.LinearLayout;
 import android.widget.Button;
 import android.widget.TextView;
+import java.net.UnknownHostException;
+import java.io.IOException;
+import android.support.annotation.NonNull;
+
 
 public class qr_scan extends Activity {
     private Button startButton,stopButton;
@@ -26,6 +35,9 @@ public class qr_scan extends Activity {
 
     AudioRecord recorder;
 
+    private static final String LOG_TAG = "AudioRecordTest";
+    private static final int REQUEST_RECORD_AUDIO_PERMISSION = 200;
+
     private int sampleRate = 16000 ; // 44100 for music
     //private int channelConfig = AudioFormat.CHANNEL_IN_MONO;
     private int channelConfig = AudioFormat.CHANNEL_CONFIGURATION_MONO;
@@ -34,17 +46,36 @@ public class qr_scan extends Activity {
     int minBufSize = AudioRecord.getMinBufferSize(sampleRate, channelConfig, audioFormat);
     private boolean status = true;
 
+    // Requesting permission to RECORD_AUDIO
+    private boolean permissionToRecordAccepted = false;
+    private String [] permissions = {Manifest.permission.RECORD_AUDIO};
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.content_qr_scan);
 
+        requestPermissions(permissions, REQUEST_RECORD_AUDIO_PERMISSION);
+
+
         startButton = (Button) findViewById (R.id.start_button);
         stopButton = (Button) findViewById (R.id.stop_button);
 
         startButton.setOnClickListener (startListener);
         stopButton.setOnClickListener (stopListener);
+
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        switch (requestCode){
+            case REQUEST_RECORD_AUDIO_PERMISSION:
+                permissionToRecordAccepted  = grantResults[0] == PackageManager.PERMISSION_GRANTED;
+                break;
+        }
+        if (!permissionToRecordAccepted ) finish();
 
     }
 
@@ -57,7 +88,7 @@ public class qr_scan extends Activity {
 
             status = false;
             recorder.release();
-            Log.d("VS","Recorder released");
+            Log.d(LOG_TAG,"Recorder released");
         }
 
     };
@@ -107,7 +138,7 @@ public class qr_scan extends Activity {
                     }
 
 
-                   // Log.d("VS", "Recorder initialized");
+                    // Log.d("VS", "Recorder initialized");
 
 
                     recorder.startRecording();
