@@ -4,41 +4,29 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#FD87C8"
     tools:context=".qr_scan" >
 
-    <TextView
-        android:id="@+id/textView1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="DropTheMic"
-        android:fontFamily="Monaco"
-        android:textSize="20dp"
-        />
+    <ImageView
+        android:id="@+id/logo_img"
+        android:layout_width="600dp"
+        android:layout_height="130dp"
+        android:src="@drawable/image_logo"
+        android:layout_marginTop="28dp"
+        android:layout_marginStart="31dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true" />
 
-    <TextView
-        android:id="@+id/status"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Not Recording"
-        android:layout_below="@+id/textView1"
-        android:fontFamily="Monaco"
-        android:textSize="30dp"
-        />
-
-    <Button
+    <ImageButton
         android:id="@+id/start_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/textView1"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:text="Start"
+        android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="130dp"
-        android:text="Start" />
+        android:layout_marginBottom="12dp"
+        android:src="@drawable/ic_mic_blue_24dp"
+        android:background="#00000000"/>
 
-    <Button
-        android:id="@+id/stop_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="64dp"
-        android:text="Stop" />
 
 </RelativeLayout>
