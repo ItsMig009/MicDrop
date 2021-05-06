@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">ClientApp</string>
+    <string name="action_settings">Settings</string>
+    <string name="hello_world"> HELLO WORLD </string>
+    <string name="localIP">192.168.1.69</string>
+    <string name="start">Start</string>
+    <string name="initiate_incoming_packets">Initiate incoming packets</string>
+    <string name="microphone_logo">Microphone Logo</string>
+</resources>
